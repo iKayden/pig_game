@@ -1,6 +1,7 @@
 'use strict';
 
-
+const player0 = document.querySelector(".player--0");
+const player1 = document.querySelector(".player--1");
 const score0Element = document.getElementById("score--0");
 const score1Element = document.getElementById("score--1");
 const dieElement = document.querySelector(".dice");
@@ -17,6 +18,7 @@ dieElement.classList.add("hidden");
 const scores = [0, 0];
 let currentScore = 0;
 let activePlayer = 0;
+
 
 // Rolling dice functionality
 btnRoll.addEventListener("click", function() {
@@ -39,6 +41,8 @@ btnRoll.addEventListener("click", function() {
       .textContent = 0;
     activePlayer = activePlayer === 0 ? 1 : 0;
     currentScore = 0;
+    player0.classList.toggle('player--active');
+    player1.classList.toggle('player--active');
   }
 
 });
