@@ -165,6 +165,9 @@ main {
   font-weight: 700;
   color: rgb(82, 138, 242);
 }
+.player--winner .score {
+  border-bottom: 6px solid #bf2e34;
+}
 
 .hidden {
   display: none;

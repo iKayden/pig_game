@@ -28,48 +28,57 @@ dieElement.classList.add("hidden");
 const scores = [0, 0];
 let currentScore = 0;
 let activePlayer = 0;
-
+let isPlaying = true;
 
 // Rolling dice functionality
 btnRoll.addEventListener("click", function() {
-  //1. Generate a random die roll
-  const dice = Math.trunc(Math.random() * 6) + 1;
+  if (isPlaying) {
 
-  // 2. Display the die
-  dieElement.classList.remove('hidden');
-  dieElement.src = `dice-${dice}.png`;
+    //1. Generate a random die roll
+    const dice = Math.trunc(Math.random() * 6) + 1;
 
-  // 3. Check for rolled 1: if true, switch to another player
-  if (dice !== 1) {
-    // store to score
-    currentScore += dice;
-    document.getElementById(`current--${activePlayer}`)
-      .textContent = currentScore;
-  } else {
-    switchPlayer();
+    // 2. Display the die
+    dieElement.classList.remove('hidden');
+    dieElement.src = `dice-${dice}.png`;
+
+    // 3. Check for rolled 1: if true, switch to another player
+    if (dice !== 1) {
+      // store to score
+      currentScore += dice;
+      document.getElementById(`current--${activePlayer}`)
+        .textContent = currentScore;
+    } else {
+      switchPlayer();
+    }
   }
 
 });
 
 btnHold.addEventListener("click", function() {
-  //Move current balance to the player score
-  scores[activePlayer] += currentScore;
-  document.getElementById(`score--${activePlayer}`)
-    .textContent = scores[activePlayer];
-  // Check if score >= 100
-  if (scores[activePlayer] >= 10) {
-    //adding visuals to a winner
-    document
-      .querySelector(`.player--${activePlayer}`)
-      .classList.add("player--winner");
-    // removing unneeded class
-    document
-      .querySelector(`.player--${activePlayer}`)
-      .classList.remove("player--active");
-    dieElement.classList.add("hidden");
-  } else {
-    //change player
-    switchPlayer();
-  }
+  if (isPlaying) {
 
+    //Move current balance to the player score
+    scores[activePlayer] += currentScore;
+    document.getElementById(`score--${activePlayer}`)
+      .textContent = scores[activePlayer];
+    // Check if score >= 100
+    if (scores[activePlayer] >= 10) {
+      //adding visuals to a winner
+      document
+        .querySelector(`.player--${activePlayer}`)
+        .classList.add("player--winner");
+      // removing unneeded class
+      document
+        .querySelector(`.player--${activePlayer}`)
+        .classList.remove("player--active");
+      dieElement.classList.add("hidden");
+      isPlaying = false;
+      btnHold.disabled = isPlaying;
+      btnRoll.disabled = isPlaying;
+    } else {
+      //change player
+      switchPlayer();
+    }
+
+  }
 });
