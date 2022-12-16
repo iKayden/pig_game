@@ -12,7 +12,7 @@ const player0CurrentScore = document.getElementById("current--0");
 const player1CurrentScore = document.getElementById("current--1");
 
 // player switching funcion
-const switchPlayers = () => {
+const switchPlayer = () => {
   document.getElementById(`current--${activePlayer}`)
     .textContent = 0;
   activePlayer = activePlayer === 0 ? 1 : 0;
@@ -46,7 +46,7 @@ btnRoll.addEventListener("click", function() {
     document.getElementById(`current--${activePlayer}`)
       .textContent = currentScore;
   } else {
-    switchPlayers();
+    switchPlayer();
   }
 
 });
@@ -54,11 +54,22 @@ btnRoll.addEventListener("click", function() {
 btnHold.addEventListener("click", function() {
   //Move current balance to the player score
   scores[activePlayer] += currentScore;
-  document.getElementById(`current--${activePlayer}`)
+  document.getElementById(`score--${activePlayer}`)
     .textContent = scores[activePlayer];
   // Check if score >= 100
+  if (scores[activePlayer] >= 10) {
+    //adding visuals to a winner
+    document
+      .querySelector(`.player--${activePlayer}`)
+      .classList.add("player--winner");
+    // removing unneeded class
+    document
+      .querySelector(`.player--${activePlayer}`)
+      .classList.remove("player--active");
+    dieElement.classList.add("hidden");
+  } else {
+    //change player
+    switchPlayer();
+  }
 
-
-  //change player
-  switchPlayers();
 });
