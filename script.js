@@ -11,6 +11,16 @@ const btnHold = document.querySelector(".btn--hold");
 const player0CurrentScore = document.getElementById("current--0");
 const player1CurrentScore = document.getElementById("current--1");
 
+// player switching funcion
+const switchPlayers = () => {
+  document.getElementById(`current--${activePlayer}`)
+    .textContent = 0;
+  activePlayer = activePlayer === 0 ? 1 : 0;
+  currentScore = 0;
+  player0.classList.toggle('player--active');
+  player1.classList.toggle('player--active');
+};
+
 //  Game starting conditions
 score0Element.textContent = 0;
 score1Element.textContent = 0;
@@ -33,16 +43,22 @@ btnRoll.addEventListener("click", function() {
   if (dice !== 1) {
     // store to score
     currentScore += dice;
-
     document.getElementById(`current--${activePlayer}`)
       .textContent = currentScore;
-  } else { // switch to another player and reset current player score
-    document.getElementById(`current--${activePlayer}`)
-      .textContent = 0;
-    activePlayer = activePlayer === 0 ? 1 : 0;
-    currentScore = 0;
-    player0.classList.toggle('player--active');
-    player1.classList.toggle('player--active');
+  } else {
+    switchPlayers();
   }
 
+});
+
+btnHold.addEventListener("click", function() {
+  //Move current balance to the player score
+  scores[activePlayer] += currentScore;
+  document.getElementById(`current--${activePlayer}`)
+    .textContent = scores[activePlayer];
+  // Check if score >= 100
+
+
+  //change player
+  switchPlayers();
 });
