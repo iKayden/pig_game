@@ -14,9 +14,9 @@ const player1CurrentScore = document.getElementById("current--1");
 score0Element.textContent = 0;
 score1Element.textContent = 0;
 dieElement.classList.add("hidden");
-
-let currentScoreP0 = 0;
-let currentScoreP1 = 0;
+const scores = [0, 0];
+let currentScore = 0;
+let activePlayer = 0;
 
 // Rolling dice functionality
 btnRoll.addEventListener("click", function() {
@@ -26,12 +26,19 @@ btnRoll.addEventListener("click", function() {
   // 2. Display the die
   dieElement.classList.remove('hidden');
   dieElement.src = `dice-${dice}.png`;
+
   // 3. Check for rolled 1: if true, switch to another player
   if (dice !== 1) {
     // store to score
-    player0CurrentScore.textContent = currentScoreP0 += dice;
+    currentScore += dice;
+
+    document.getElementById(`current--${activePlayer}`)
+      .textContent = currentScore;
   } else { // switch to another player and reset current player score
-    player0CurrentScore.textContent = currentScoreP0 = 0;
+    document.getElementById(`current--${activePlayer}`)
+      .textContent = 0;
+    activePlayer = activePlayer === 0 ? 1 : 0;
+    currentScore = 0;
   }
 
 });
