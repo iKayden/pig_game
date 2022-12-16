@@ -21,14 +21,30 @@ const switchPlayer = () => {
   player1.classList.toggle('player--active');
 };
 
-//  Game starting conditions
-score0Element.textContent = 0;
-score1Element.textContent = 0;
-dieElement.classList.add("hidden");
-const scores = [0, 0];
-let currentScore = 0;
-let activePlayer = 0;
-let isPlaying = true;
+//Use global scope to initialize variables
+let scores, currentScore, activePlayer, isPlaying;
+
+//game restarting function
+const gameInit = function() {
+  //  Game starting conditions
+  scores = [0, 0];
+  currentScore = 0;
+  activePlayer = 0;
+  isPlaying = true;
+
+  player0CurrentScore.textContent = 0;
+  player1CurrentScore.textContent = 0;
+  score0Element.textContent = 0;
+  score1Element.textContent = 0;
+  //remove winner class if there is one
+  dieElement.classList.add("hidden");
+  player0.classList.remove("player--winner");
+  player1.classList.remove("player--winner");
+
+  player1.classList.remove("player--active");
+  player0.classList.add("player--active");
+};
+gameInit();
 
 // Rolling dice functionality
 btnRoll.addEventListener("click", function() {
@@ -73,8 +89,6 @@ btnHold.addEventListener("click", function() {
         .classList.remove("player--active");
       dieElement.classList.add("hidden");
       isPlaying = false;
-      btnHold.disabled = isPlaying;
-      btnRoll.disabled = isPlaying;
     } else {
       //change player
       switchPlayer();
@@ -82,3 +96,5 @@ btnHold.addEventListener("click", function() {
 
   }
 });
+
+btnNew.addEventListener("click", gameInit);
