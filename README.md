@@ -1,8 +1,6 @@
 # Pig Game! Get to 100!
 
-## Tiny adorable game for two
-
-<hr>
+Tiny adorable dice game for two! Use your luck and strategy to win!
 
 ## Installation
 
